@@ -1,0 +1,154 @@
+@{
+    ViewData["Title"] = "Reports";
+}
+
+<h1>Library Reports</h1>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">Most Borrowed Books</h5>
+            </div>
+            <div class="card-body">
+                @if (ViewBag.MostBorrowedBooks != null && ((List<dynamic>)ViewBag.MostBorrowedBooks).Count > 0)
+                {
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Author</th>
+                                <th>Borrow Count</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var book in (List<dynamic>)ViewBag.MostBorrowedBooks)
+                            {
+                                <tr>
+                                    <td>@book.Title</td>
+                                    <td>@book.Author</td>
+                                    <td>@book.Count</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <p class="text-muted">No borrowing data available yet.</p>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header bg-success text-white">
+                <h5 class="mb-0">Popular Authors</h5>
+            </div>
+            <div class="card-body">
+                @if (ViewBag.PopularAuthors != null && ((List<dynamic>)ViewBag.PopularAuthors).Count > 0)
+                {
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Author</th>
+                                <th>Total Borrows</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var author in (List<dynamic>)ViewBag.PopularAuthors)
+                            {
+                                <tr>
+                                    <td>@author.Name</td>
+                                    <td>@author.Count</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <p class="text-muted">No author data available yet.</p>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header bg-danger text-white">
+                <h5 class="mb-0">Overdue Borrowings</h5>
+            </div>
+            <div class="card-body">
+                @if (ViewBag.OverdueBorrowings != null && ((List<lab10.Models.Borrowing>)ViewBag.OverdueBorrowings).Count > 0)
+                {
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Book</th>
+                                <th>Member</th>
+                                <th>Due Date</th>
+                                <th>Days Overdue</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var borrowing in (List<lab10.Models.Borrowing>)ViewBag.OverdueBorrowings)
+                            {
+                                var daysOverdue = (DateTime.Now - borrowing.DueDate).Days;
+                                <tr>
+                                    <td>@borrowing.Book?.Title</td>
+                                    <td>@borrowing.Member?.FirstName @borrowing.Member?.LastName</td>
+                                    <td>@borrowing.DueDate.ToString("yyyy-MM-dd")</td>
+                                    <td class="text-danger font-weight-bold">@daysOverdue</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <p class="text-muted">No overdue borrowings. Great job!</p>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header bg-info text-white">
+                <h5 class="mb-0">Books by Category</h5>
+            </div>
+            <div class="card-body">
+                @if (ViewBag.BooksByCategory != null && ((List<dynamic>)ViewBag.BooksByCategory).Count > 0)
+                {
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Category</th>
+                                <th>Total Books</th>
+                                <th>Available</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var category in (List<dynamic>)ViewBag.BooksByCategory)
+                            {
+                                <tr>
+                                    <td>@category.CategoryName</td>
+                                    <td>@category.TotalBooks</td>
+                                    <td>@category.AvailableBooks</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <p class="text-muted">No category data available yet.</p>
+                }
+            </div>
+        </div>
+    </div>
+</div>

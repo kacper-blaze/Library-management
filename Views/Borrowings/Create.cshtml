@@ -1,0 +1,43 @@
+@model lab10.Models.Borrowing
+
+@{
+    ViewData["Title"] = "Create Borrowing";
+}
+
+<h1>Create Borrowing</h1>
+
+<h4>Borrowing</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="BookId" class="control-label">Book</label>
+                <select asp-for="BookId" class="form-control" asp-items="@(new SelectList(ViewBag.Books, "Id", "Title"))"></select>
+                <span asp-validation-for="BookId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MemberId" class="control-label">Member</label>
+                <select asp-for="MemberId" class="form-control" asp-items="@(new SelectList(ViewBag.Members, "Id", "FirstName"))"></select>
+                <span asp-validation-for="MemberId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DueDate" class="control-label">Due Date</label>
+                <input asp-for="DueDate" class="form-control" type="date" />
+                <span asp-validation-for="DueDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

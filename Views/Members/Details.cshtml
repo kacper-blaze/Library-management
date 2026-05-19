@@ -1,0 +1,77 @@
+@model lab10.Models.Member
+
+@{
+    ViewData["Title"] = "Member Details";
+}
+
+<h1>Member Details</h1>
+
+<div>
+    <h4>Member</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">Name</dt>
+        <dd class="col-sm-10">@Model.FirstName @Model.LastName</dd>
+        <dt class="col-sm-2">Email</dt>
+        <dd class="col-sm-10">@Model.Email</dd>
+        <dt class="col-sm-2">Phone</dt>
+        <dd class="col-sm-10">@Model.PhoneNumber</dd>
+        <dt class="col-sm-2">Address</dt>
+        <dd class="col-sm-10">@Model.Address</dd>
+        <dt class="col-sm-2">Member Since</dt>
+        <dd class="col-sm-10">@Model.MembershipDate.ToString("yyyy-MM-dd")</dd>
+    </dl>
+</div>
+
+<h4>Borrowing History</h4>
+@if (Model.Borrowings != null && Model.Borrowings.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Book</th>
+                <th>Borrow Date</th>
+                <th>Due Date</th>
+                <th>Return Date</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var borrowing in Model.Borrowings)
+            {
+                <tr>
+                    <td>@borrowing.Book?.Title</td>
+                    <td>@borrowing.BorrowDate.ToString("yyyy-MM-dd")</td>
+                    <td>@borrowing.DueDate.ToString("yyyy-MM-dd")</td>
+                    <td>@(borrowing.ReturnDate?.ToString("yyyy-MM-dd") ?? "Not returned")</td>
+                    <td>
+                        @if (borrowing.ReturnDate == null)
+                        {
+                            if (borrowing.DueDate < DateTime.Now)
+                            {
+                                <span class="badge bg-danger">Overdue</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-warning">Borrowed</span>
+                            }
+                        }
+                        else
+                        {
+                            <span class="badge bg-success">Returned</span>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No borrowing history found.</p>
+}
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Edit</a>
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+</div>

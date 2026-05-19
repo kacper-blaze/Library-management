@@ -1,0 +1,32 @@
+@model lab10.Models.Borrowing
+
+@{
+    ViewData["Title"] = "Borrowing Details";
+}
+
+<h1>Borrowing Details</h1>
+
+<div>
+    <h4>Borrowing</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">Book</dt>
+        <dd class="col-sm-10">@Model.Book?.Title (ISBN: @Model.Book?.ISBN)</dd>
+        <dt class="col-sm-2">Member</dt>
+        <dd class="col-sm-10">@Model.Member?.FirstName @Model.Member?.LastName (@Model.Member?.Email)</dd>
+        <dt class="col-sm-2">Borrow Date</dt>
+        <dd class="col-sm-10">@Model.BorrowDate.ToString("yyyy-MM-dd")</dd>
+        <dt class="col-sm-2">Due Date</dt>
+        <dd class="col-sm-10">@Model.DueDate.ToString("yyyy-MM-dd")</dd>
+        <dt class="col-sm-2">Return Date</dt>
+        <dd class="col-sm-10">@(Model.ReturnDate?.ToString("yyyy-MM-dd") ?? "Not returned")</dd>
+    </dl>
+</div>
+
+@if (Model.ReturnDate == null)
+{
+    <a asp-action="Return" asp-route-id="@Model.Id" class="btn btn-success">Return Book</a>
+}
+<div>
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+</div>
