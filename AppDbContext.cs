@@ -15,9 +15,7 @@ public class AppDbContext : DbContext
     public DbSet<Book> Books { get; set; }
     public DbSet<Member> Members { get; set; }
     public DbSet<Borrowing> Borrowings { get; set; }
-
-    // This can safely remain as a fallback, but the constructor above 
-    // is what prevents the exit code 134 crash.
+    
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         if (!optionsBuilder.IsConfigured)

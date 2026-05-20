@@ -14,11 +14,10 @@ public class Program
         // Add services to the container.
         builder.Services.AddControllersWithViews();
         
-        // 1. ADD THIS: Register session services and configure options
-        builder.Services.AddDistributedMemoryCache(); // Required for session storage
+        builder.Services.AddDistributedMemoryCache();
         builder.Services.AddSession(options =>
         {
-            options.IdleTimeout = TimeSpan.FromMinutes(30); // Set session timeout duration
+            options.IdleTimeout = TimeSpan.FromMinutes(30);
             options.Cookie.HttpOnly = true;                        
             options.Cookie.IsEssential = true;
         });
@@ -47,8 +46,6 @@ public class Program
 
         app.UseRouting();
 
-        // 2. ADD THIS: Enable session middleware 
-        // CRITICAL: This MUST go after UseRouting() and BEFORE UseAuthorization()
         app.UseSession(); 
 
         app.UseAuthorization();

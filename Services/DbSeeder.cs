@@ -14,7 +14,6 @@ public static class DbSeeder
         var adminUser = await dbContext.Loginy.FirstOrDefaultAsync(l => l.Username == "admin@mail.com");
         if (adminUser == null)
         {
-            // Create admin user
             var hashedPassword = BcryptHelper.ComputeBCryptHash("admin123");
             var apiToken = GenerateApiToken();
 
