@@ -19,7 +19,6 @@ public class Borrowing
     [Column(TypeName = "date")]
     public DateTime BorrowDate { get; set; } = DateTime.Now;
     
-    [Required]
     [Column(TypeName = "date")]
     public DateTime DueDate { get; set; }
     

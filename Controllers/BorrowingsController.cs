@@ -104,29 +104,22 @@ public class BorrowingsController : Controller
             return RedirectToAction("Index", "Home");
         }
 
-        if (ModelState.IsValid)
+        var book = await _dbContext.Books.FindAsync(borrowing.BookId);
+        if (book == null || book.AvailableCopies <= 0)
         {
-            var book = await _dbContext.Books.FindAsync(borrowing.BookId);
-            if (book == null || book.AvailableCopies <= 0)
-            {
-                ModelState.AddModelError("", "Book is not available");
-                ViewBag.Books = _dbContext.Books.Where(b => b.AvailableCopies > 0).ToList();
-                ViewBag.Members = _dbContext.Members.ToList();
-                return View(borrowing);
-            }
-
-            book.AvailableCopies--;
-            borrowing.BorrowDate = DateTime.Now;
-            borrowing.DueDate = DateTime.Now.AddDays(14); // 14 days loan period
-
-            _dbContext.Add(borrowing);
-            await _dbContext.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            ModelState.AddModelError("", "Book is not available");
+            ViewBag.Books = _dbContext.Books.Where(b => b.AvailableCopies > 0).ToList();
+            ViewBag.Members = _dbContext.Members.ToList();
+            return View(borrowing);
         }
 
-        ViewBag.Books = _dbContext.Books.Where(b => b.AvailableCopies > 0).ToList();
-        ViewBag.Members = _dbContext.Members.ToList();
-        return View(borrowing);
+        book.AvailableCopies--;
+        borrowing.BorrowDate = DateTime.Now;
+        borrowing.DueDate = DateTime.Now.AddDays(28); // 28 days loan period
+
+        _dbContext.Add(borrowing);
+        await _dbContext.SaveChangesAsync();
+        return RedirectToAction(nameof(Index));
     }
 
     // GET: Borrowings/Return/5

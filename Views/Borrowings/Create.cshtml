@@ -19,13 +19,8 @@
             </div>
             <div class="form-group">
                 <label asp-for="MemberId" class="control-label">Member</label>
-                <select asp-for="MemberId" class="form-control" asp-items="@(new SelectList(ViewBag.Members, "Id", "FirstName"))"></select>
+                <select asp-for="MemberId" class="form-control" asp-items="@(new SelectList(ViewBag.Members, "Id", "Email"))"></select>
                 <span asp-validation-for="MemberId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DueDate" class="control-label">Due Date</label>
-                <input asp-for="DueDate" class="form-control" type="date" />
-                <span asp-validation-for="DueDate" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
