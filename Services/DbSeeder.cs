@@ -136,28 +136,28 @@ public static class DbSeeder
         {
             var members = new List<Member>
             {
-                new Member 
-                { 
-                    FirstName = "John", 
-                    LastName = "Smith", 
+                new Member
+                {
+                    FirstName = "John",
+                    LastName = "Smith",
                     Email = "john.smith@email.com",
                     PhoneNumber = "1234567890",
                     Address = "123 Main St, City",
                     MembershipDate = DateTime.Now.AddDays(-30)
                 },
-                new Member 
-                { 
-                    FirstName = "Jane", 
-                    LastName = "Doe", 
+                new Member
+                {
+                    FirstName = "Jane",
+                    LastName = "Doe",
                     Email = "jane.doe@email.com",
                     PhoneNumber = "0987654321",
                     Address = "456 Oak Ave, Town",
                     MembershipDate = DateTime.Now.AddDays(-15)
                 },
-                new Member 
-                { 
-                    FirstName = "Bob", 
-                    LastName = "Johnson", 
+                new Member
+                {
+                    FirstName = "Bob",
+                    LastName = "Johnson",
                     Email = "bob.johnson@email.com",
                     PhoneNumber = "5551234567",
                     Address = "789 Pine Rd, Village",
@@ -167,6 +167,35 @@ public static class DbSeeder
             dbContext.Members.AddRange(members);
             await dbContext.SaveChangesAsync();
             Console.WriteLine("Members seeded");
+
+            // Create login accounts for members
+            var loginUsers = new List<Login>
+            {
+                new Login
+                {
+                    Username = "john.smith@email.com",
+                    Password = BcryptHelper.ComputeBCryptHash("password123"),
+                    Role = "User",
+                    ApiToken = GenerateApiToken()
+                },
+                new Login
+                {
+                    Username = "jane.doe@email.com",
+                    Password = BcryptHelper.ComputeBCryptHash("password123"),
+                    Role = "User",
+                    ApiToken = GenerateApiToken()
+                },
+                new Login
+                {
+                    Username = "bob.johnson@email.com",
+                    Password = BcryptHelper.ComputeBCryptHash("password123"),
+                    Role = "User",
+                    ApiToken = GenerateApiToken()
+                }
+            };
+            dbContext.Loginy.AddRange(loginUsers);
+            await dbContext.SaveChangesAsync();
+            Console.WriteLine("Login accounts for members created");
         }
 
         // Seed some borrowings if empty

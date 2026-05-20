@@ -5,7 +5,8 @@ namespace lab10.Models;
 public class AddUserViewModel
 {
     [Required]
-    [Display(Name = "Username")]
+    [EmailAddress]
+    [Display(Name = "Email")]
     public string Username { get; set; } = string.Empty;
     
     [Required]
