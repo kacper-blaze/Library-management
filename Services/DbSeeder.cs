@@ -70,9 +70,9 @@ public static class DbSeeder
             
             var books = new List<Book>
             {
-                new Book 
-                { 
-                    Title = "Harry Potter and the Philosopher's Stone", 
+                new Book
+                {
+                    Title = "Harry Potter and the Philosopher's Stone",
                     ISBN = "978-0747532743",
                     PublicationYear = 1997,
                     Publisher = "Bloomsbury",
@@ -81,20 +81,20 @@ public static class DbSeeder
                     AuthorId = authors[0].Id,
                     CategoryId = categories[0].Id
                 },
-                new Book 
-                { 
-                    Title = "1984", 
+                new Book
+                {
+                    Title = "1984",
                     ISBN = "978-0451524935",
                     PublicationYear = 1949,
                     Publisher = "Signet Classic",
                     TotalCopies = 3,
                     AvailableCopies = 3,
                     AuthorId = authors[1].Id,
-                    CategoryId = categories[0].Id
+                    CategoryId = categories[1].Id
                 },
-                new Book 
-                { 
-                    Title = "Pride and Prejudice", 
+                new Book
+                {
+                    Title = "Pride and Prejudice",
                     ISBN = "978-0141439518",
                     PublicationYear = 1813,
                     Publisher = "Penguin Classics",
@@ -103,9 +103,9 @@ public static class DbSeeder
                     AuthorId = authors[2].Id,
                     CategoryId = categories[0].Id
                 },
-                new Book 
-                { 
-                    Title = "The Shining", 
+                new Book
+                {
+                    Title = "The Shining",
                     ISBN = "978-0307743657",
                     PublicationYear = 1977,
                     Publisher = "Doubleday",
@@ -114,15 +114,70 @@ public static class DbSeeder
                     AuthorId = authors[3].Id,
                     CategoryId = categories[0].Id
                 },
-                new Book 
-                { 
-                    Title = "Murder on the Orient Express", 
+                new Book
+                {
+                    Title = "Murder on the Orient Express",
                     ISBN = "978-0062073501",
                     PublicationYear = 1934,
                     Publisher = "HarperCollins",
                     TotalCopies = 3,
                     AvailableCopies = 3,
                     AuthorId = authors[4].Id,
+                    CategoryId = categories[0].Id
+                },
+                new Book
+                {
+                    Title = "A Brief History of Time",
+                    ISBN = "978-0553380163",
+                    PublicationYear = 1988,
+                    Publisher = "Bantam",
+                    TotalCopies = 4,
+                    AvailableCopies = 4,
+                    AuthorId = authors[0].Id,
+                    CategoryId = categories[2].Id
+                },
+                new Book
+                {
+                    Title = "The Diary of a Young Girl",
+                    ISBN = "978-0141035139",
+                    PublicationYear = 1947,
+                    Publisher = "Penguin",
+                    TotalCopies = 3,
+                    AvailableCopies = 3,
+                    AuthorId = authors[2].Id,
+                    CategoryId = categories[3].Id
+                },
+                new Book
+                {
+                    Title = "Steve Jobs",
+                    ISBN = "978-1451648539",
+                    PublicationYear = 2011,
+                    Publisher = "Simon & Schuster",
+                    TotalCopies = 2,
+                    AvailableCopies = 2,
+                    AuthorId = authors[3].Id,
+                    CategoryId = categories[4].Id
+                },
+                new Book
+                {
+                    Title = "Sapiens: A Brief History of Humankind",
+                    ISBN = "978-0062316097",
+                    PublicationYear = 2011,
+                    Publisher = "Harper",
+                    TotalCopies = 3,
+                    AvailableCopies = 3,
+                    AuthorId = authors[1].Id,
+                    CategoryId = categories[1].Id
+                },
+                new Book
+                {
+                    Title = "The Catcher in the Rye",
+                    ISBN = "978-0316769488",
+                    PublicationYear = 1951,
+                    Publisher = "Little, Brown and Company",
+                    TotalCopies = 4,
+                    AvailableCopies = 4,
+                    AuthorId = authors[3].Id,
                     CategoryId = categories[0].Id
                 }
             };
