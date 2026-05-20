@@ -43,6 +43,7 @@
                                         <th>Borrow Date</th>
                                         <th>Due Date</th>
                                         <th>Status</th>
+                                        <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -61,6 +62,9 @@
                                                 {
                                                     <span class="badge bg-success">Active</span>
                                                 }
+                                            </td>
+                                            <td>
+                                                <a asp-controller="Borrowings" asp-action="Extend" asp-route-id="@borrowing.Id" class="btn btn-sm btn-warning">Extend</a>
                                             </td>
                                         </tr>
                                     }
