@@ -1,0 +1,38 @@
+@model lab10.Models.Borrowing
+
+@{
+    ViewData["Title"] = "Extend Borrowing";
+}
+
+<h1>Extend Borrowing</h1>
+
+<h4>Borrowing</h4>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <dl class="row">
+                    <dt class="col-sm-4">Book</dt>
+                    <dd class="col-sm-8">@Model.Book?.Title</dd>
+
+                    <dt class="col-sm-4">Member</dt>
+                    <dd class="col-sm-8">@Model.Member?.FirstName @Model.Member?.LastName (@Model.Member?.Email)</dd>
+
+                    <dt class="col-sm-4">Current Due Date</dt>
+                    <dd class="col-sm-8">@Model.DueDate.ToString("yyyy-MM-dd")</dd>
+
+                    <dt class="col-sm-4">New Due Date</dt>
+                    <dd class="col-sm-8">@Model.DueDate.AddDays(14).ToString("yyyy-MM-dd")</dd>
+                </dl>
+
+                <form method="post" asp-action="Extend" asp-route-id="@Model.Id">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="id" value="@Model.Id" />
+                    <button type="submit" class="btn btn-warning">Extend by 14 Days</button>
+                    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

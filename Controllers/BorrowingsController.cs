@@ -122,6 +122,63 @@ public class BorrowingsController : Controller
         return RedirectToAction(nameof(Index));
     }
 
+    // GET: Borrowings/Extend/5
+    public async Task<IActionResult> Extend(int? id)
+    {
+        if (!IsLoggedIn())
+        {
+            return RedirectToAction("Login", "Account");
+        }
+
+        if (id == null)
+        {
+            return NotFound();
+        }
+
+        var borrowing = await _dbContext.Borrowings
+            .Include(b => b.Book)
+            .Include(b => b.Member)
+            .FirstOrDefaultAsync(m => m.Id == id);
+
+        if (borrowing == null)
+        {
+            return NotFound();
+        }
+
+        // Check if user is admin or the borrowing belongs to the logged-in user
+        var userEmail = HttpContext.Session.GetString("UserEmail");
+        var isAdmin = HttpContext.Session.GetString("UserRole") == "Admin";
+        var isOwner = borrowing.Member?.Email == userEmail;
+
+        if (!isAdmin && !isOwner)
+        {
+            return RedirectToAction("Index", "Home");
+        }
+
+        return View(borrowing);
+    }
+
+    // POST: Borrowings/Extend/5
+    [HttpPost, ActionName("Extend")]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> ExtendConfirmed(int id)
+    {
+        if (!IsLoggedIn())
+        {
+            return RedirectToAction("Login", "Account");
+        }
+
+        var borrowing = await _dbContext.Borrowings.FindAsync(id);
+        if (borrowing != null && borrowing.ReturnDate == null)
+        {
+            // Extend by 14 days
+            borrowing.DueDate = borrowing.DueDate.AddDays(14);
+            await _dbContext.SaveChangesAsync();
+        }
+
+        return RedirectToAction(nameof(Index));
+    }
+
     // GET: Borrowings/Return/5
     public async Task<IActionResult> Return(int? id)
     {

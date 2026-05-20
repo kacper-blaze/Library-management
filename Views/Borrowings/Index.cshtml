@@ -57,6 +57,7 @@
                     @if (item.ReturnDate == null)
                     {
                         <a asp-action="Return" asp-route-id="@item.Id" class="btn btn-sm btn-success">Return</a>
+                        <a asp-action="Extend" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Extend</a>
                     }
                     <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Delete</a>
                 </td>
