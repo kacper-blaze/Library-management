@@ -11,23 +11,23 @@ public static class DbSeeder
         await dbContext.Database.EnsureCreatedAsync();
 
         // Check if admin user exists
-        var adminUser = await dbContext.Loginy.FirstOrDefaultAsync(l => l.Username == "admin");
+        var adminUser = await dbContext.Loginy.FirstOrDefaultAsync(l => l.Username == "admin@mail.com");
         if (adminUser == null)
         {
             // Create admin user
             var hashedPassword = BcryptHelper.ComputeBCryptHash("admin123");
             var apiToken = GenerateApiToken();
-            
+
             adminUser = new Login
             {
-                Username = "admin",
+                Username = "admin@mail.com",
                 Password = hashedPassword,
                 Role = "Admin",
                 ApiToken = apiToken
             };
             dbContext.Loginy.Add(adminUser);
             await dbContext.SaveChangesAsync();
-            Console.WriteLine("Admin user created: admin / admin123");
+            Console.WriteLine("Admin user created: admin@mail.com / admin123");
         }
 
         // Seed categories if empty

@@ -116,8 +116,8 @@ public class AccountController : Controller
         return View(model);
     }
 
+    [HttpGet]
     [HttpPost]
-    [ValidateAntiForgeryToken]
     public IActionResult Logout()
     {
         HttpContext.Session.Clear();
@@ -137,6 +137,20 @@ public class AccountController : Controller
         
         ViewBag.UserRole = user?.Role;
         ViewBag.ApiToken = user?.ApiToken;
+        
+        // Get user's borrowed books
+        var member = await _dbContext.Members.FirstOrDefaultAsync(m => m.Email == userEmail);
+        List<Borrowing> borrowings = new List<Borrowing>();
+        
+        if (member != null)
+        {
+            borrowings = await _dbContext.Borrowings
+                .Include(b => b.Book)
+                .Where(b => b.MemberId == member.Id && b.ReturnDate == null)
+                .ToListAsync();
+        }
+        
+        ViewBag.Borrowings = borrowings;
         
         return View();
     }

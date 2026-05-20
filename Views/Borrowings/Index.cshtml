@@ -2,12 +2,16 @@
 
 @{
     ViewData["Title"] = "Borrowings";
+    var userRole = Context.Session.GetString("UserRole");
 }
 
 <h1>Borrowings</h1>
 
 <p>
-    <a asp-action="Create" class="btn btn-primary">Create New</a>
+    @if (userRole != null && userRole == "Admin")
+    {
+        <a asp-action="Create" class="btn btn-primary">Create New</a>
+    }
 </p>
 
 <table class="table">

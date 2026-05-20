@@ -31,6 +31,10 @@ public class MembersController : Controller
         {
             return RedirectToAction("Login", "Account");
         }
+        if (!IsAdmin())
+        {
+            return RedirectToAction("Index", "Home");
+        }
 
         var members = await _dbContext.Members.ToListAsync();
         return View(members);
@@ -42,6 +46,10 @@ public class MembersController : Controller
         if (!IsLoggedIn())
         {
             return RedirectToAction("Login", "Account");
+        }
+        if (!IsAdmin())
+        {
+            return RedirectToAction("Index", "Home");
         }
 
         if (id == null)

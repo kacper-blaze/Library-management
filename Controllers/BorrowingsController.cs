@@ -31,6 +31,10 @@ public class BorrowingsController : Controller
         {
             return RedirectToAction("Login", "Account");
         }
+        if (!IsAdmin())
+        {
+            return RedirectToAction("Index", "Home");
+        }
 
         var borrowings = await _dbContext.Borrowings
             .Include(b => b.Book)
@@ -45,6 +49,10 @@ public class BorrowingsController : Controller
         if (!IsLoggedIn())
         {
             return RedirectToAction("Login", "Account");
+        }
+        if (!IsAdmin())
+        {
+            return RedirectToAction("Index", "Home");
         }
 
         if (id == null)

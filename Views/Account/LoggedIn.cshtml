@@ -1,6 +1,7 @@
 @{
     ViewData["Title"] = "Logged In";
     var userEmail = Context.Session.GetString("UserEmail");
+    var borrowings = ViewBag.Borrowings as List<lab10.Models.Borrowing>;
 }
 
 <div class="container mt-5">
@@ -14,9 +15,8 @@
                     <p class="card-text">
                         Welcome <strong>@userEmail</strong>! You have successfully logged into the application.
                     </p>
-                    
-                    <form method="post" asp-action="Logout" asp-controller="Account">
-                        @Html.AntiForgeryToken()
+
+                    <form method="post" asp-action="Logout" asp-controller="Account" asp-antiforgery="true">
                         <button type="submit" class="btn btn-danger btn-lg w-100">
                             Logout
                         </button>
@@ -25,4 +25,63 @@
             </div>
         </div>
     </div>
+
+    @if (borrowings != null && borrowings.Any())
+    {
+        <div class="row justify-content-center mt-4">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h4 class="mb-0">My Borrowed Books</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Book Title</th>
+                                        <th>Borrow Date</th>
+                                        <th>Due Date</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var borrowing in borrowings)
+                                    {
+                                        <tr>
+                                            <td>@borrowing.Book?.Title</td>
+                                            <td>@borrowing.BorrowDate.ToString("yyyy-MM-dd")</td>
+                                            <td>@borrowing.DueDate.ToString("yyyy-MM-dd")</td>
+                                            <td>
+                                                @if (borrowing.DueDate < DateTime.Now)
+                                                {
+                                                    <span class="badge bg-danger">Overdue</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge bg-success">Active</span>
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="row justify-content-center mt-4">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <p class="text-muted">You have no borrowed books at the moment.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
 </div>

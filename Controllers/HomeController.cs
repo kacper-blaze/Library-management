@@ -79,14 +79,16 @@ public class HomeController : Controller
         }
 
         // Available books by category
-        var booksByCategory = await dbContext.Categories
+        var booksByCategoryQuery = dbContext.Categories
             .Select(c => new
             {
                 CategoryName = c.Name,
                 TotalBooks = c.Books.Count,
                 AvailableBooks = c.Books.Sum(b => b.AvailableCopies)
-            })
-            .ToListAsync();
+            });
+
+        var booksByCategoryRaw = await booksByCategoryQuery.ToListAsync();
+        var booksByCategory = booksByCategoryRaw.Cast<object>().ToList();
 
         ViewBag.MostBorrowedBooks = topBooks;
         ViewBag.OverdueBorrowings = overdueBorrowings;
