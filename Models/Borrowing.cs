@@ -27,8 +27,8 @@ public class Borrowing
     
     // Navigation properties
     [ForeignKey("BookId")]
-    public Book Book { get; set; } = null!;
+    public Book? Book { get; set; }
     
     [ForeignKey("MemberId")]
-    public Member Member { get; set; } = null!;
+    public Member? Member { get; set; }
 }

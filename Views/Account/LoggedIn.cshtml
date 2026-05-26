@@ -1,6 +1,8 @@
 @{
     ViewData["Title"] = "Logged In";
     var userEmail = Context.Session.GetString("UserEmail");
+    var userRole = ViewBag.UserRole as string;
+    var apiToken = ViewBag.ApiToken as string;
     var borrowings = ViewBag.Borrowings as List<lab10.Models.Borrowing>;
 }
 
@@ -15,6 +17,20 @@
                     <p class="card-text">
                         Welcome <strong>@userEmail</strong>! You have successfully logged into the application.
                     </p>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Role:</label>
+                        <span class="badge bg-primary">@userRole</span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">API Token:</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" value="@apiToken" readonly id="apiToken">
+                            <button class="btn btn-outline-secondary" type="button" onclick="copyToken()">Copy</button>
+                        </div>
+                        <small class="text-muted">Use this token with your username for REST API authentication</small>
+                    </div>
 
                     <form method="post" asp-action="Logout" asp-controller="Account" asp-antiforgery="true">
                         <button type="submit" class="btn btn-danger btn-lg w-100">
@@ -89,3 +105,12 @@
         </div>
     }
 </div>
+
+<script>
+function copyToken() {
+    var tokenInput = document.getElementById("apiToken");
+    tokenInput.select();
+    document.execCommand("copy");
+    alert("API Token copied to clipboard!");
+}
+</script>

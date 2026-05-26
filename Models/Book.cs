@@ -42,10 +42,10 @@ public class Book
     
     // Navigation properties
     [ForeignKey("AuthorId")]
-    public Author Author { get; set; } = null!;
+    public Author? Author { get; set; }
     
     [ForeignKey("CategoryId")]
-    public Category Category { get; set; } = null!;
+    public Category? Category { get; set; }
     
     public ICollection<Borrowing> Borrowings { get; set; } = new List<Borrowing>();
 }

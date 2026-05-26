@@ -12,7 +12,13 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
 
         // Add services to the container.
-        builder.Services.AddControllersWithViews();
+        builder.Services.AddControllersWithViews()
+            .AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
+                options.JsonSerializerOptions.WriteIndented = true;
+                options.JsonSerializerOptions.PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase;
+            });
         
         builder.Services.AddDistributedMemoryCache();
         builder.Services.AddSession(options =>
@@ -41,7 +47,7 @@ public class Program
             app.UseHsts();
         }
 
-        app.UseHttpsRedirection();
+        // app.UseHttpsRedirection();
         app.UseStaticFiles();
 
         app.UseRouting();
@@ -49,6 +55,8 @@ public class Program
         app.UseSession(); 
 
         app.UseAuthorization();
+
+        app.MapControllers();
 
         app.MapControllerRoute(
             name: "default",
