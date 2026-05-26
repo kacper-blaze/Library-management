@@ -18,6 +18,42 @@ A web-based library management system built with ASP.NET Core MVC that allows ad
 - **My Account**: View personal information and borrowed books
 - **Extend Due Date**: Extend borrowing period by 14 days
 
+### REST API Features
+- **Full CRUD Support**: Manage books, authors, categories, members, and borrowings via RESTful endpoints
+- **Custom Authentication**: Secure access using `username` and `token` headers
+- **JSON Serialization**: Responses optimized with circular reference handling and camelCase naming
+
+## REST API Documentation
+
+The system provides a comprehensive REST API accessible at `/api/`.
+
+### Authentication
+All API requests must include the following headers:
+- `username`: Your email address
+- `token`: Your personal API token (can be found on the "Logged In" page after logging into the web interface)
+
+### Endpoints
+- `GET/POST /api/books`
+- `GET/PUT/DELETE /api/books/{id}`
+- `GET/POST /api/authors`
+- `GET/POST /api/categories`
+- `GET/POST /api/members`
+- `GET/POST /api/borrowings`
+- `POST /api/borrowings/{id}/return`
+
+## Console Demo
+
+A separate console application is provided to demonstrate the REST API functionality.
+
+### Running the Demo
+1. Ensure the web application is running (`dotnet run` in `lab10` folder)
+2. Open a new terminal and navigate to the `ConsoleDemo` folder
+3. Run the application:
+   ```bash
+   dotnet run
+   ```
+4. Enter your admin credentials and API token to start managing the library from the command line.
+
 ## Technologies Used
 
 - **ASP.NET Core MVC** - Web framework
